@@ -1,5 +1,5 @@
 {
-    "C_Cpp.intelliSenseEngine": "disabled",
+    "C_Cpp.intelliSenseEngine": "default",
     "clangd.path": "/usr/bin/clangd",
     "clangd.checkUpdates": false,
     "clangd.restartAfterCrash": true,
@@ -27,5 +27,8 @@
     ],
     "cmake.environment": {
         "CLICOLOR_FORCE": "1"
+    },
+    "files.associations": {
+        "iostream": "cpp"
     },
 }
