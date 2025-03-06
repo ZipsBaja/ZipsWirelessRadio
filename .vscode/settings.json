@@ -29,6 +29,15 @@
         "CLICOLOR_FORCE": "1"
     },
     "files.associations": {
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "numbers": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp",
+        "vector": "cpp",
+        "string_view": "cpp",
+        "initializer_list": "cpp",
+        "cstring": "cpp"
     },
 }

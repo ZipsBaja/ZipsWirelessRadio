@@ -43,7 +43,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ZipsPicoLib
-    pico_cyw43_arch_lwip_poll
+    pico_cyw43_arch_lwip_threadsafe_background
     pico_stdlib
 )
 

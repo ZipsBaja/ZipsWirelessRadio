@@ -1,53 +1,41 @@
-#define USING_PRINT 1
-#define RETRY_CONNECTION 1
+#include <Options.h>
 
 #include <ZipsLib.h>
 #include <ZipsWireless.h>
 #include <WiFiClient.h>
 
+#include <hardware/gpio.h>
+
+#define BUTTON_PIN 16
+
 int main(int argc, char* argv[])
 {
 	init_libs();
 
+	gpio_init(BUTTON_PIN);
+	gpio_set_dir(BUTTON_PIN, GPIO_IN);
+
 	BEGIN_SETUP();
 
-	cyw43_arch_enable_sta_mode();
-
 	uazips::WiFiClient client;
-	uazips::OrderedList<const cyw43_ev_scan_result_t*> list = client.ScanNetworks(10);
-	while (1)
-	{
-		for (const cyw43_ev_scan_result_t* res : list)
-		{
-			LOG("%s", res->ssid);
-		}
-		sleep_ms(1000);
-	}
 
-	bool connected = false;
-#if RETRY_CONNECTION
-	while (!connected)
-	{
-#endif
-		if (cyw43_arch_wifi_connect_timeout_ms(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, TIMEOUT_MS))
-		{
-#if RETRY_CONNECTION
-			WARN("Connection timed out. Retrying...");
-#else
-			THROW("Could not connect to Wi-Fi point.");
-#endif
-		} else
-			connected = true;
-#if RETRY_CONNECTION
-	}
-#endif
+	uint8_t payload = WIFI_PAYLOAD_LOW;
+
+	client.Connect(WIFI_SSID, WIFI_PASSWORD, CYW43_AUTH_WPA2_AES_PSK, WIFI_TIMEOUT_MS, [](){ WARN("Failed to connect. Retrying...\n"); }, RETRY_CONNECTION);
 
 	BEGIN_LOOP();
 	while (1)
 	{
-		//cyw43_arch_poll();
-		THROW("in loop");
-		
+		client.Update();
+
+		// Set payload high/low based on button status.
+		payload = gpio_get(BUTTON_PIN) ? WIFI_PAYLOAD_HIGH : WIFI_PAYLOAD_LOW;
+
+		int8_t e = client.SendUDP(&payload, sizeof(payload), WIFI_PORT);
+		if (e != ERR_OK)
+		{
+			WARN("Packet Error: %d.\n", e);
+		}
 	}
 
 }

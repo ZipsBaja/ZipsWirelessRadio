@@ -30,7 +30,7 @@ elseif(PICO_BOARD STREQUAL "pico2")
 add_compile_definitions(USING_PICO_2)
 endif()
 
-add_executable(${CMAKE_PROJECT_NAME} server.cpp)
+add_executable(${CMAKE_PROJECT_NAME} server.cpp dhcpserver.c)
 
 pico_enable_stdio_usb(${CMAKE_PROJECT_NAME} 1)
 pico_enable_stdio_uart(${CMAKE_PROJECT_NAME} 1)
@@ -43,7 +43,7 @@ target_include_directories(${CMAKE_PROJECT_NAME} PUBLIC
 
 target_link_libraries(${CMAKE_PROJECT_NAME}
     ZipsPicoLib
-    pico_cyw43_arch_lwip_poll
+    pico_cyw43_arch_lwip_threadsafe_background
     pico_stdlib
 )
 
