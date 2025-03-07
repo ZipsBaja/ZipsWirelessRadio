@@ -4,7 +4,7 @@
 #include <ZipsWireless.h>
 #include <WiFiServer.h>
 
-#define SIGNAL_PIN 22
+#define SIGNAL_PIN 5
 
 volatile bool radio_connected = false;
 
@@ -39,11 +39,12 @@ int main(int argc, char* argv[])
 #endif
 				radio_connected = false;
 			}
-
-			LOG("Packet received. Payload: %i\t on port: %i\n", status, port);
+			char ipbuf[16];
+			ipaddr_ntoa_r(addr, ipbuf, sizeof(ipbuf));
+			LOG("Packet received. Payload: %i\t on port: %i\t from IP: %s\n", status, port, ipbuf);
 			pbuf_free(p);
 		},
-	WIFI_PORT, NULL);
+	WIFI_PORT, &server);
 	
 	BEGIN_LOOP();
 	while (1)

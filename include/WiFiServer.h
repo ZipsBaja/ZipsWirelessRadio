@@ -14,7 +14,7 @@ namespace uazips
 
     class WiFiServer : public WiFiController
     {
-    public:
+    private:
         dhcp_server_t dhcp;
         ip4_addr_t ip_self;
     public:

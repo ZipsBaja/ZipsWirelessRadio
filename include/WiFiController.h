@@ -65,7 +65,7 @@ namespace uazips
 
     class WiFiController : public LoopingFunction
     {
-    public:
+    protected:
         ip4_addr_t ip_switch;
         udp_pcb* pcb;
     public:
