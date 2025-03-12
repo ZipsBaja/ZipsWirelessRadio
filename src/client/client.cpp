@@ -6,6 +6,7 @@
 
 #include <hardware/gpio.h>
 
+// Millisecond period, frequency is 1 / delay. Needed for using 
 #define DELAY_INTERVAL 40
 
 #define BUTTON_PTT_PIN 16
@@ -20,6 +21,7 @@ int main(int argc, char* argv[])
 	gpio_set_dir(BUTTON_PTT_PIN, GPIO_IN);
 	gpio_set_dir(BUTTON_PTT_PIN, GPIO_IN);
 	gpio_pull_down(BUTTON_PTT_PIN);
+	gpio_pull_down(BUTTON_TOG_PIN);
 
 	BEGIN_SETUP();
 

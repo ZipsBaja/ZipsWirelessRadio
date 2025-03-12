@@ -13,6 +13,7 @@ int main(int argc, char* argv[])
 	init_libs();
 	
 	gpio_init(SIGNAL_PIN);
+	gpio_set_dir(SIGNAL_PIN, GPIO_OUT);
 
 	BEGIN_SETUP();
 
