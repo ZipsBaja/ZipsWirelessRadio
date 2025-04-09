@@ -12,6 +12,10 @@
 #define BUTTON_PTT_PIN 16
 #define BUTTON_TOG_PIN 17
 
+#if USING_EXT_LED
+#define EXT_LED_PIN 18
+#endif
+
 int main(int argc, char* argv[])
 {
 	init_libs();
@@ -58,7 +62,9 @@ int main(int argc, char* argv[])
 			// Set payload high/low based on button status.
 			payload = gpio_get(BUTTON_PTT_PIN) ? WIFI_PAYLOAD_HIGH : WIFI_PAYLOAD_LOW;
 		}
-
+#if USING_EXT_LED
+		gpio_put(EXT_LED_PIN, payload);
+#endif
 		int8_t e = client.SendUDP(&payload, sizeof(payload), WIFI_PORT);
 		if (e != ERR_OK)
 		{
