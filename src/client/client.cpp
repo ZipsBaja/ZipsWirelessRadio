@@ -13,7 +13,7 @@
 #define BUTTON_TOG_PIN 17
 
 #if USING_EXT_LED
-#define EXT_LED_PIN 18
+#define EXT_LED_PIN 20
 #endif
 
 int main(int argc, char* argv[])
@@ -22,8 +22,10 @@ int main(int argc, char* argv[])
 
 	gpio_init(BUTTON_PTT_PIN);
 	gpio_init(BUTTON_TOG_PIN);
+	gpio_init(EXT_LED_PIN);
 	gpio_set_dir(BUTTON_PTT_PIN, GPIO_IN);
 	gpio_set_dir(BUTTON_PTT_PIN, GPIO_IN);
+	gpio_set_dir(EXT_LED_PIN, GPIO_OUT);
 	gpio_pull_down(BUTTON_PTT_PIN);
 	gpio_pull_down(BUTTON_TOG_PIN);
 
@@ -63,7 +65,7 @@ int main(int argc, char* argv[])
 			payload = gpio_get(BUTTON_PTT_PIN) ? WIFI_PAYLOAD_HIGH : WIFI_PAYLOAD_LOW;
 		}
 #if USING_EXT_LED
-		gpio_put(EXT_LED_PIN, payload);
+		gpio_put(EXT_LED_PIN, payload == WIFI_PAYLOAD_HIGH);
 #endif
 		int8_t e = client.SendUDP(&payload, sizeof(payload), WIFI_PORT);
 		if (e != ERR_OK)
