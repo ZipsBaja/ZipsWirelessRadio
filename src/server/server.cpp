@@ -4,7 +4,7 @@
 #include <ZipsWireless.h>
 #include <WiFiServer.h>
 
-#define SIGNAL_PIN 5
+#define SIGNAL_PIN 4
 
 volatile bool radio_connected = false;
 

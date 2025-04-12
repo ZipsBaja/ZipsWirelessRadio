@@ -9,11 +9,11 @@
 // Millisecond period, frequency is 1 / delay. Needed for using 
 #define DELAY_INTERVAL 40
 
-#define BUTTON_PTT_PIN 16
-#define BUTTON_TOG_PIN 17
+#define BUTTON_PTT_PIN 3
+#define BUTTON_TOG_PIN 6
 
 #if USING_EXT_LED
-#define EXT_LED_PIN 20
+#define EXT_LED_PIN 10
 #endif
 
 int main(int argc, char* argv[])
